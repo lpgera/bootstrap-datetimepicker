@@ -830,9 +830,15 @@
                         toggle.addClass('disabled');
                     }
                 }
-                timeComponents.filter('[data-time-component=hours]').text(date.format(use24Hours ? 'HH' : 'hh'));
-                timeComponents.filter('[data-time-component=minutes]').text(date.format('mm'));
-                timeComponents.filter('[data-time-component=seconds]').text(date.format('ss'));
+                if (!unset) {
+                    timeComponents.filter('[data-time-component=hours]').text(date.format(use24Hours ? 'HH' : 'hh'));
+                    timeComponents.filter('[data-time-component=minutes]').text(date.format('mm'));
+                    timeComponents.filter('[data-time-component=seconds]').text(date.format('ss'));
+                } else {
+                    timeComponents.filter('[data-time-component=hours]').text('--');
+                    timeComponents.filter('[data-time-component=minutes]').text('--');
+                    timeComponents.filter('[data-time-component=seconds]').text('--');
+                }
 
                 fillHours();
                 fillMinutes();
