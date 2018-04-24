@@ -854,7 +854,9 @@
             },
 
             setValue = function (targetMoment) {
-                var oldDate = unset ? null : date;
+                var oldDate = unset ? null : date,
+                    diffInMinutes,
+                    minutesToAdd;
 
                 // case of calling setValue(null or false)
                 if (!targetMoment) {
@@ -879,8 +881,10 @@
                 if (options.stepping !== 1) {
                     targetMoment.minutes((Math.round(targetMoment.minutes() / options.stepping) * options.stepping)).seconds(0);
 
-                    while (options.minDate && targetMoment.isBefore(options.minDate)) {
-                        targetMoment.add(options.stepping, 'minutes');
+                    if (options.minDate && targetMoment.isBefore(options.minDate)) {
+                        diffInMinutes = options.minDate.diff(targetMoment, 'minutes');
+                        minutesToAdd = Math.ceil(diffInMinutes / options.stepping) * options.stepping;
+                        targetMoment.add(minutesToAdd, 'minutes');
                     }
                 }
 
